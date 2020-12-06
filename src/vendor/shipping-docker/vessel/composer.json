@@ -1,0 +1,27 @@
+{
+    "name": "shipping-docker/vessel",
+    "description": "Simple Docker dev environments",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Fidao",
+            "email": "fideloper@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Vessel\\": "src/"
+        }
+    },
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vessel\\VesselServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-update-cmd": "echo 'VESSEL: Updates may require rebuilding your images.\nVESSEL: See https://github.com/shipping-docker/vessel/releases for details.'"
+    }
+}
