@@ -14,4 +14,4 @@ Nas tabelas de entrada e saída deverá ficar registrado qual usuário realizou 
 
 ## Diagrama EER
 
-![](https://i.imgur.com/oofEair.jpeg)
+![](https://i.imgur.com/fvYELLQ.jpg)
