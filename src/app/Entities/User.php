@@ -5,6 +5,9 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 /**
  * Class User.
@@ -14,12 +17,17 @@ use Prettus\Repository\Traits\TransformableTrait;
 class User extends Model implements Transformable
 {
     use TransformableTrait;
+    use SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [];
-
+    public    $timestamps   = true;
+    protected $table        = ['users'];      
+    protected $fillable     = ['name','cpf','phone','birth','email','password','status','permission'];
+    protected $hidden       = ['password','remember_token'];
+    
 }
