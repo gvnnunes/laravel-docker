@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', ['uses' => 'Controller@login']);
+Route::post('/', ['as' => 'user.login', 'uses' => 'Controller@login']);

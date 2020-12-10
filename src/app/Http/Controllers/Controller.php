@@ -12,7 +12,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function login(){
-        return view('login');
+        return view('user.login');
     }
 }
 
