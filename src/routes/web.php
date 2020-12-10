@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', ['uses' => 'Controller@login']);
-Route::post('/', ['as' => 'user.login', 'uses' => 'Controller@login']);
+Route::get('/', ['as' => 'user.login.page', 'uses' => 'Controller@login']);
+Route::post('/', ['as' => 'user.login', 'uses' => 'DashboardController@auth']);
+
+Route::get('/dashboard', ['as' => 'user.dashboard', 'uses'=> 'DashboardController@index']);
+

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
+
 /**
  * Class User.
  *
@@ -26,7 +27,7 @@ class User extends Model implements Transformable
      * @var array
      */
     public    $timestamps   = true;
-    protected $table        = ['users'];      
+    protected $table        = 'users';      
     protected $fillable     = ['name','cpf','phone','birth','email','password','status','permission'];
     protected $hidden       = ['password','remember_token'];
     
