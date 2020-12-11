@@ -1,6 +1,14 @@
 # Como rodar o projeto
 
-Na pasta raiz do repositório rode o comando `docker-compose up -d --build site`, o site ficará disponível em [localhost:8080](http://localhost:8080 "localhost:8080").
+Na pasta raiz do repositório execute os seguintes comandos e o site ficará disponível em [localhost:8080](http://localhost:8080 "localhost:8080").
+
+- `docker-compose up -d --build site`
+- `docker-compose run --rm artisan migrate --seed`
+
+#### Credenciais para acessar o sistema:
+
+- **Usuário:** giovaninunes99@gmail.com
+- **Senha:** 123456
 
 ## Escopo do projeto (Sistema de gestão de estoque):
 
