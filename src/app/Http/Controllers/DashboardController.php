@@ -28,6 +28,11 @@ class DashboardController extends Controller
         return redirect()->route('user.login.page');
     }
 
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('user.login.page');
+    }
+
     public function auth(Request $request){ 
 
         if(!filter_var($request['username'], FILTER_VALIDATE_EMAIL)){
@@ -41,7 +46,7 @@ class DashboardController extends Controller
                 
         try
         {   
-            if(Auth::attempt($data,false)){
+            if(Auth::attempt($data, false)){
                 return redirect()->route('user.dashboard');
             }
             

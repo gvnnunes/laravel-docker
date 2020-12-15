@@ -18,4 +18,5 @@ Route::get('/', ['as' => 'user.login.page', 'uses' => 'Controller@login']);
 Route::post('/', ['as' => 'user.login', 'uses' => 'DashboardController@auth']);
 
 Route::get('/dashboard', ['as' => 'user.dashboard', 'uses'=> 'DashboardController@index']);
+Route::get('/logout', ['as' => 'user.logout', 'uses' => 'DashboardController@logout']);
 
