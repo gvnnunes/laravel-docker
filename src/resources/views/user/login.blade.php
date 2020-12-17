@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::submit('Entrar', ['placeholder' => 'Usuário', 'class' => 'form-control btn']) !!}
+                            {!! Form::submit('Entrar', ['class' => 'form-control btn']) !!}
                         </div>
 
                     {!! Form::close() !!}

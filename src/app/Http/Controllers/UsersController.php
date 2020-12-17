@@ -11,6 +11,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
+use Auth;
 
 /**
  * Class UsersController.
@@ -48,17 +49,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $users,
-            ]);
+        if(Auth::check()){
+            return view('user.users');
         }
-
-        return view('users.index', compact('users'));
+        return redirect()->route('user.login.page');
     }
 
     /**

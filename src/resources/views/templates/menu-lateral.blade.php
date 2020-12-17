@@ -1,7 +1,7 @@
 <div class="sidebar">
     <header>Menu</header>
     <ul>
-        <li><a href="#"><i class="fa fa-user"></i>Usuários</a></li>
+        <li><a href="{{ route('user.users') }}"><i class="fa fa-user"></i>Usuários</a></li>
         <li><a href="#"><i class="fa fa-archive"></i>Estoque</a></li>
         <li><a href="#"><i class="fa fa-arrow-up"></i>Entrada</a></li>
         <li><a href="#"><i class="fa fa-arrow-down"></i>Saída</a></li>
