@@ -1271,6 +1271,15 @@
       ),
       'reference' => 'b43b05cf43c1b6d849478965062b6ef73e223bb5',
     ),
+    'uxweb/sweet-alert' => 
+    array (
+      'pretty_version' => '2.0.5',
+      'version' => '2.0.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e9eb83d7d991de0fcb74398a698e0cdfef6d189d',
+    ),
     'vlucas/phpdotenv' => 
     array (
       'pretty_version' => 'v5.2.0',
@@ -1297,6 +1306,15 @@
       array (
       ),
       'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
+    ),
+    'yoeunes/toastr' => 
+    array (
+      'pretty_version' => 'v1.2.5',
+      'version' => '1.2.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '49bf0e8ade88a1ab4865c01a840ab782d6710719',
     ),
   ),
 );

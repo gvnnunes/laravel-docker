@@ -5,6 +5,7 @@ use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Exception;
+use SweetAlert;
 
 class UserService
 {
@@ -22,20 +23,28 @@ class UserService
         try
         {
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
-            $data['password'] = bcrypt($data['password']);
-            $user = $this->repository->create($data);
+            if($data['password'] == $data['password_retyped']){
+                $data['password'] = bcrypt($data['password']);
+            }
+            else{
+                return [
+                    'success' => false,
+                    'message' => 'As senhas não conferem.'
+                ];
+            }
 
+            $this->repository->create($data);
+            
             return [
                 'success'   => true,
-                'message'   => 'Usuário cadastrado.',
-                'data'      => $user
+                'message'   => 'Usuário cadastrado com sucesso!'
             ];
         }
         catch(Exception $ex)
         {
             return [
                 'success'   => false,
-                'message'   => $ex
+                'message'   => 'Usuário não cadastrado, tente novamente.'
             ];
         }
 

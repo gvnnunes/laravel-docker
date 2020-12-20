@@ -4,10 +4,9 @@
 
 .footer{
     position: absolute;
-    float: left;
-    width: 100%;
+    right: 0;
+    width: calc(100% - 250px);
     height: 67px;
-    padding-left: 250px;
     bottom: 0;
     background-color: #fff;   
     border-top: 2px solid #ecf0f1; 

@@ -178,7 +178,8 @@ return [
         
         Vessel\VesselServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,  
+        Collective\Html\HtmlServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
 
     ],
 

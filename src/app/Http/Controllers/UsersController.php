@@ -30,26 +30,27 @@ class UsersController extends Controller
         if(Auth::check()){
             return view('user.index');
         }
+
         return redirect()->route('user.login.page');
     }
 
     public function store(UserCreateRequest $request)
     {
         $request = $this->service->store($request->all());
+        
+        /*
+        session()->flash('success', [
+            'success' => $request['success'],
+            'message' => $request['message']      
+        ]);        
+        */
 
         if($request['success']){
-            $user = $request['data'];
-            $message = $request['message'];
-        }
-        else{
-            $user = null;
-            $message = $request['message'];
-        }
-
-        return view('user.index', [
-            'usuario' => $user,
-            'message' => $message
-        ]);
+            toastr()->success($request['message'], 'Sistema');
+            return redirect()->back();
+        }    
+        toastr()->error($request['message'], 'Sistema');
+        return redirect()->back()->withInput();
     }
 
     /**
