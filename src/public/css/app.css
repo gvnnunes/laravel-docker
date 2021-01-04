@@ -130,6 +130,14 @@ hr{
     margin-top: 2em;
 }
 
-#user-table_wrapper #user-table{
-    padding-top: 1.75em;
+#user-table_wrapper label{
+    margin-bottom: 1em;
+}
+
+#user-table_wrapper label input{
+    background-color: #fff;
+}
+
+#user-table thead{
+    background-color: #fff;
 }
