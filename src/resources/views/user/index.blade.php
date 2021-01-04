@@ -18,7 +18,22 @@
                     @include('templates.formularios.password', ['name' => 'password', 'attributes' => ['placeholder' => 'Senha', 'class' => 'form-control', 'maxlength' => '50', 'required']])
                     @include('templates.formularios.password', ['name' => 'password_retyped', 'attributes' => ['placeholder' => 'Confirme a senha', 'class' => 'form-control', 'maxlength' => '50', 'required']])
                     @include('templates.formularios.submit', ['value' => 'Cadastrar', 'attributes' => ['class' => 'form-control btn']])
-                {!! Form::close() !!}                
+                {!! Form::close() !!}    
+                
+                <table id="user-table" class="table table-bordered w-100">
+                    <thead>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Cpf</th>
+                        <th>Telefone</th>
+                        <th>Data de Nascimento</th>
+                        <th>E-mail</th>
+                        <th>Status</th>
+                        <th>Permissão</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -26,6 +41,27 @@
 
 @section('js-view')
    <script>
+
+    $(document).ready(function(){
+        $('#user-table').DataTable({
+            serverSide: true,
+            paging: false,
+            info: false,
+            ajax: "{{ route('user.index') }}",
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'cpf' },
+                { data: 'phone' },
+                { data: 'birth' },
+                { data: 'email' },
+                { data: 'status' },
+                { data: 'permission' },
+            ]
+        });
+    });
+
+    //
 
     $('input[name="birth"]').focus(function(){        
         if($('input[name="birth"]').val() == ""){
@@ -49,13 +85,8 @@
     */
    
     function getDate(){
-        var date = new Date();
-        var dd = String(date.getDate());
-        var mm = String(date.getMonth() + 1);
-        var yyyy = String(date.getFullYear());
-        var today = yyyy + '-' + mm + '-' + dd;
-
-        return today;
+        
+        return moment().format('yyyy-MM-DD');
     }
 
    </script>

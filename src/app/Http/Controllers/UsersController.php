@@ -13,6 +13,7 @@ use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use App\Services\UserService;
 use Auth;
+use DataTables;
 
 class UsersController extends Controller
 {
@@ -25,10 +26,16 @@ class UsersController extends Controller
         $this->service      = $service;        
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        if(Auth::check()){
-            return view('user.index');
+        if(Auth::check()){            
+
+            if($request->ajax()){
+                $data = $this->repository->all();
+                return Datatables::of($data)->make(true);
+            }
+
+            return view('user.index');            
         }
 
         return redirect()->route('user.login.page');

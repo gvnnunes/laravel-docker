@@ -1271,15 +1271,6 @@
       ),
       'reference' => 'b43b05cf43c1b6d849478965062b6ef73e223bb5',
     ),
-    'uxweb/sweet-alert' => 
-    array (
-      'pretty_version' => '2.0.5',
-      'version' => '2.0.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'e9eb83d7d991de0fcb74398a698e0cdfef6d189d',
-    ),
     'vlucas/phpdotenv' => 
     array (
       'pretty_version' => 'v5.2.0',
@@ -1306,6 +1297,15 @@
       array (
       ),
       'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
+    ),
+    'yajra/laravel-datatables-oracle' => 
+    array (
+      'pretty_version' => 'v9.15.2',
+      'version' => '9.15.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e0b416d8b7d4472b16217c40e74284074cc34dde',
     ),
     'yoeunes/toastr' => 
     array (

@@ -125,3 +125,11 @@ body{
 hr{
     border-bottom: 1px solid #34495e;
 }
+
+#user-table_wrapper{
+    margin-top: 2em;
+}
+
+#user-table_wrapper #user-table{
+    padding-top: 1.75em;
+}

@@ -17,7 +17,7 @@
         "laravelcollective/html": "^6.2",
         "prettus/l5-repository": "^2.7",
         "shipping-docker/vessel": "^6.0",
-        "uxweb/sweet-alert": "^2.0",
+        "yajra/laravel-datatables-oracle": "^9.15",
         "yoeunes/toastr": "^1.2"
     },
     "require-dev": {

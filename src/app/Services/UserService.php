@@ -5,7 +5,6 @@ use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Exception;
-use SweetAlert;
 
 class UserService
 {
