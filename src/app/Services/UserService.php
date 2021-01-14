@@ -42,10 +42,38 @@ class UserService
             ];
         }
         catch(Exception $ex){
-            return [
-                'success'   => false,
-                'message'   => 'Falha ao cadastrar usuário!'
-            ];
+            try{
+                $id = DB::table('users')->where('email', $data['email'])->value('id');
+                if($id == null){
+                    $id = DB::table('users')->where('cpf', $data['cpf'])->value('id');
+                }
+                
+                if(DB::table('users')->where('email', $data['email'])->where('deleted_at', null)->value('id') != null){
+                    if(DB::table('users')->where('cpf', $data['cpf'])->where('deleted_at', null)->value('id') != null){
+                        return [
+                            'success'   => false,
+                            'message'   => 'Usuário já cadastrado!'
+                        ];
+                    }
+                                        
+                    return [
+                        'success'   => false,
+                        'message'   => 'E-mail já cadastrado!'
+                    ];
+                }
+                else if(DB::table('users')->where('cpf', $data['cpf'])->where('deleted_at', null)->value('id') != null){
+                    return [
+                        'success'   => false,
+                        'message'   => 'Cpf já cadastrado!'
+                    ];
+                }                
+            }
+            catch(Exception $e){
+                return [
+                    'success'   => false,
+                    'message'   => 'Usuário não cadastrado!'
+                ];
+            }
         }      
     } 
 
