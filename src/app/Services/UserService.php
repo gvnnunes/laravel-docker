@@ -21,18 +21,27 @@ class UserService
 
     public function store($data){
 
-        $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+        try{
+
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
         
-        if($data['password'] == $data['password_retyped']){
-            $data['password'] = bcrypt($data['password']);
+            if($data['password'] == $data['password_retyped']){
+                $data['password'] = bcrypt($data['password']);
+            }
+            else{
+                return [
+                    'success' => false,
+                    'message' => 'As senhas não conferem.'
+                ];
+            }
         }
-        else{
+        catch(Exception $ex){
             return [
                 'success' => false,
-                'message' => 'As senhas não conferem.'
+                'message' => 'Campos obrigatórios não foram preenchidos!'
             ];
         }
-
+        
         try{
 
             $this->repository->create($data);
@@ -66,9 +75,15 @@ class UserService
                         'success'   => false,
                         'message'   => 'Cpf já cadastrado!'
                     ];
-                }                
+                }
+                else if(User::withTrashed()->find($id)->restore()){
+                    return [
+                        'success'   => true,
+                        'message'   => 'Usuário restaurado!'
+                    ];
+                }             
             }
-            catch(Exception $e){
+            catch(Exception $ex){
                 return [
                     'success'   => false,
                     'message'   => 'Usuário não cadastrado!'
