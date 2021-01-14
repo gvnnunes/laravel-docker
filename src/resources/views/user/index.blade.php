@@ -5,11 +5,11 @@
     <section id="conteudo-users">
         <div class="container">
             <div class="row">
-                </script>
+                </script>              
 
                 <h3>Cadastro de Usuários</h3>
                 <hr>
-                {!! Form::open(['route' => 'user.store', 'method' => 'post', 'id' => 'userstore']) !!}
+                {!! Form::open(['route' => 'user.store', 'method' => 'post']) !!}
                     @include('templates.formularios.text', ['name' => 'name', 'attributes' => ['placeholder' => 'Nome completo', 'class' => 'form-control', 'maxlength' => '100', 'required']])
                     @include('templates.formularios.text', ['name' => 'cpf', 'attributes' => ['placeholder' => 'CPF', 'class' => 'form-control', 'maxlength' => '11', 'pattern' => '[0-9]{11}', 'required']])
                     @include('templates.formularios.text', ['name' => 'phone', 'attributes' => ['placeholder' => 'Telefone', 'class' => 'form-control', 'maxlength' => '11', 'pattern' => '[0-9]{10,11}']])
@@ -17,7 +17,7 @@
                     @include('templates.formularios.email', ['name' => 'email', 'attributes' => ['placeholder' => 'E-mail', 'class' => 'form-control', 'maxlength' => '100', 'required']])
                     @include('templates.formularios.password', ['name' => 'password', 'attributes' => ['placeholder' => 'Senha', 'class' => 'form-control', 'maxlength' => '50', 'required']])
                     @include('templates.formularios.password', ['name' => 'password_retyped', 'attributes' => ['placeholder' => 'Confirme a senha', 'class' => 'form-control', 'maxlength' => '50', 'required']])
-                    @include('templates.formularios.submit', ['value' => 'Cadastrar', 'attributes' => ['class' => 'form-control btn']])
+                    @include('templates.formularios.submit', ['value' => 'Cadastrar', 'attributes' => ['class' => 'form-control btn', 'id' => 'btn']])
                 {!! Form::close() !!}    
                 
                 <table id="user-table" class="cell-border display hover w-100">
@@ -30,72 +30,33 @@
                         <th>E-mail</th>
                         <th>Status</th>
                         <th>Permissão</th>
+                        <th>Ação</th>
                     </thead>
                     <tbody>
+                        @foreach($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->cpf }}</td>
+                                <td>{{ $user->phone }}</td>
+                                <td>{{ $user->birth }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->status }}</td>
+                                <td>{{ $user->permission }}</td>
+                                <td>
+                                    {!! Form::open(['route' => ['user.update', $user->id], 'method' => 'PUT']) !!}                                    
+                                        @include('templates.formularios.submit', ['value' => 'Editar', 'attributes' => ['class' => 'edit btn']])
+                                    {!! Form::close() !!}
+                                    
+                                    {!! Form::open(['route' => ['user.destroy', $user->id], 'method' => 'DELETE']) !!}                                    
+                                        @include('templates.formularios.submit', ['value' => 'Excluir', 'attributes' => ['class' => 'delete btn']])
+                                    {!! Form::close() !!}
+                                </td>
+                            </tr>                  
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
-@endsection
-
-@section('js-view')
-   <script>
-
-    $(document).ready(function(){
-        $('#user-table').DataTable({
-            serverSide: true,
-            paging: false,
-            info: false,
-            oLanguage: {
-                sSearch: "Pesquisar: "
-            },
-            ajax: "{{ route('user.index') }}",
-            columns: [
-                { data: 'id' },
-                { data: 'name' },
-                { data: 'cpf',
-                  render: function (data){
-                        return data.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-
-                  }
-                },
-                { data: 'phone' },
-                { data: 'birth' },
-                { data: 'email' },
-                { data: 'status' },
-                { data: 'permission' },
-            ]
-        });
-    });
-
-    //
-
-    $('input[name="birth"]').focus(function(){        
-        if($('input[name="birth"]').val() == ""){
-            $('input[name="birth"]').attr('type', 'date');    
-            $('input[name="birth"]').val(getDate()); 
-        }
-    });
-
-    $('input[name="birth"]').focusout(function(){        
-        if($('input[name="birth"]').val() == ""){
-            $('input[name="birth"]').attr('type', 'date');    
-            $('input[name="birth"]').val(getDate()); 
-        }
-    });
-
-    /*
-    $('input[name="password_retyped"]').keyup(function(){
-        if ($('input[name="password_retyped"]').val() != $('input[name="password"]').val() )
-            console.log('As senhas não conferem!');
-    });
-    */
-   
-    function getDate(){
-        
-        return moment().format('yyyy-MM-DD');
-    }
-
-   </script>
 @endsection

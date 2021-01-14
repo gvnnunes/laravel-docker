@@ -23,23 +23,35 @@ class UsersController extends Controller
     public function __construct(UserRepository $repository, UserService $service)
     {
         $this->repository   = $repository;        
-        $this->service      = $service;        
+        $this->service      = $service;    
     }
 
     public function index(Request $request)
     {
         if(Auth::check()){            
-
+            
+            /*
             if($request->ajax()){
                 $data = $this->repository->all();
-                return Datatables::of($data)->make(true);
+                return Datatables::of($data)
+                ->addColumn('action', function($data){
+                    $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn">Editar</button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="delete" id="'.$data->id.'" class="delete btn">Excluir</button>';
+                    $button = "<a href=\"{{ route('user.destroy', [$data->id]) }}\" class='edit btn'>Editar</a>";
+                    $button .= "&nbsp;&nbsp;&nbsp;<a href=\"{{ route('user.destroy', [$data->id]) }}\" class='delete btn'>Excluir</a>";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
             }
+            */ 
+            $users = $this->repository->all();
 
-            return view('user.index');            
+            return view('user.index', ['users' => $users]);            
         }
 
         return redirect()->route('user.login.page');
     }
+
 
     public function store(UserCreateRequest $request)
     {
@@ -51,7 +63,7 @@ class UsersController extends Controller
             'message' => $request['message']      
         ]);        
         */
-
+        
         if($request['success']){
             toastr()->success($request['message'], 'Sistema');
             return redirect()->back();
@@ -60,13 +72,7 @@ class UsersController extends Controller
         return redirect()->back()->withInput();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         $user = $this->repository->find($id);
@@ -81,13 +87,7 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
         $user = $this->repository->find($id);
@@ -95,16 +95,7 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  UserUpdateRequest $request
-     * @param  string            $id
-     *
-     * @return Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
+    
     public function update(UserUpdateRequest $request, $id)
     {
         try {
@@ -138,26 +129,17 @@ class UsersController extends Controller
         }
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'User deleted.',
-                'deleted' => $deleted,
-            ]);
+        $request = $this->service->destroy($id);
+        
+        if($request['success']){
+            toastr()->success($request['message'], 'Sistema');
+            return redirect()->back();
         }
-
-        return redirect()->back()->with('message', 'User deleted.');
+        else{
+            toastr()->error($request['message'], 'Sistema');
+            return redirect()->back();
+        }        
     }
 }

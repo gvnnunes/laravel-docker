@@ -80,7 +80,7 @@
     }
 }
 
-/* CSS usuários */
+/* CSS Usuários */
 
 body{
     background-color:#f9f9f9;
@@ -115,7 +115,7 @@ body{
     line-height: 40px;
 }
 
-#conteudo-users .btn{  
+#conteudo-users #btn{  
     line-height: 45px;
     background-color: #2c3e50;
     color: #fff;
@@ -140,4 +140,28 @@ hr{
 
 #user-table thead{
     background-color: #fff;
+}
+
+#user-table .edit{
+    background-color: #2980b9;
+    color: #fff;
+}
+
+#user-table .delete{
+    background-color: #e74c3c;
+    color: #fff;
+    margin-left: 0.10em;
+}
+
+#user-table td form{
+    display: inline-block;
+    height: 40px;
+}
+
+@media(max-width: 1586px){
+    #user-table .delete{
+        background-color: #e74c3c;
+        color: #fff;
+        margin-left: 0em;
+    }
 }
