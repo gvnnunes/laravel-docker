@@ -35,11 +35,20 @@
                     <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td>{{ $id = $user->id }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->cpf }}</td>
-                                <td>{{ $user->phone }}</td>
-                                <td>{{ $user->birth }}</td>
+                                <td>{{ substr($user->cpf, 0, 3) . '.' . substr($user->cpf, 3, 3) . '.' . substr($user->cpf, 6, 3) . '-' . substr($user->cpf, 9, 2) }} </td>
+                                <td>
+                                    @if(strlen($user->phone) == 10)
+                                        {{ '(' . substr($user->phone, 0, 2) . ') ' . substr($user->phone, 2, 4) . '-' . substr($user->phone, 6, 4) }}
+                                    @else
+                                        {{ '(' . substr($user->phone, 0, 2) . ') ' . substr($user->phone, 2, 5) . '-' . substr($user->phone, 7, 4) }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @php ($birth = explode('-', $user->birth))
+                                    {{ $birth[2] . '/' . $birth[1] . '/' . $birth[0] }}
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->status }}</td>
                                 <td>{{ $user->permission }}</td>

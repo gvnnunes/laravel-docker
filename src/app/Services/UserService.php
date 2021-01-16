@@ -22,7 +22,6 @@ class UserService
     public function store($data){
 
         try{
-
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
         
             if($data['password'] == $data['password_retyped']){
@@ -41,9 +40,8 @@ class UserService
                 'message' => 'Campos obrigatórios não foram preenchidos!'
             ];
         }
-        
-        try{
 
+        try{
             $this->repository->create($data);
             return [
                 'success'   => true,
