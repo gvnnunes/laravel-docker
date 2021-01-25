@@ -20,7 +20,6 @@ class UserService
     }
 
     public function store($data){
-
         try{
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
         
@@ -41,53 +40,47 @@ class UserService
             ];
         }
 
-        try{
-            $this->repository->create($data);
-            return [
-                'success'   => true,
-                'message'   => 'Usuário cadastrado com sucesso!'
-            ];
+        // Verificação dos campos antes de inserir no banco
+        
+        $id = DB::table('users')->where('email', $data['email'])->value('id');
+        if($id == null){
+            $id = DB::table('users')->where('cpf', $data['cpf'])->value('id');
         }
-        catch(Exception $ex){
-            try{
-                $id = DB::table('users')->where('email', $data['email'])->value('id');
-                if($id == null){
-                    $id = DB::table('users')->where('cpf', $data['cpf'])->value('id');
-                }
-                
-                if(DB::table('users')->where('email', $data['email'])->where('deleted_at', null)->value('id') != null){
-                    if(DB::table('users')->where('cpf', $data['cpf'])->where('deleted_at', null)->value('id') != null){
-                        return [
-                            'success'   => false,
-                            'message'   => 'Usuário já cadastrado!'
-                        ];
-                    }
-                                        
-                    return [
-                        'success'   => false,
-                        'message'   => 'E-mail já cadastrado!'
-                    ];
-                }
-                else if(DB::table('users')->where('cpf', $data['cpf'])->where('deleted_at', null)->value('id') != null){
-                    return [
-                        'success'   => false,
-                        'message'   => 'Cpf já cadastrado!'
-                    ];
-                }
-                else if(User::withTrashed()->find($id)->restore()){
-                    return [
-                        'success'   => true,
-                        'message'   => 'Usuário restaurado!'
-                    ];
-                }             
-            }
-            catch(Exception $ex){
+            
+        if(DB::table('users')->where('email', $data['email'])->where('deleted_at', null)->value('id') != null){
+            if(DB::table('users')->where('cpf', $data['cpf'])->where('deleted_at', null)->value('id') != null){
                 return [
                     'success'   => false,
-                    'message'   => 'Usuário não cadastrado!'
+                    'message'   => 'Usuário já cadastrado!'
                 ];
             }
-        }      
+                                    
+            return [
+                'success'   => false,
+                'message'   => 'E-mail já cadastrado!'
+            ];
+        }
+        else if(DB::table('users')->where('cpf', $data['cpf'])->where('deleted_at', null)->value('id') != null){
+            return [
+                'success'   => false,
+                'message'   => 'Cpf já cadastrado!'
+            ];
+        }
+        else if(User::withTrashed()->find($id) != null){
+            User::withTrashed()->find($id)->restore();
+
+            return [
+                'success'   => true,
+                'message'   => 'Usuário restaurado!'
+            ];
+        }          
+        
+        $this->repository->create($data);
+
+        return [
+            'success'   => true,
+            'message'   => 'Usuário cadastrado com sucesso!'
+        ];      
     } 
 
     public function update(){
